@@ -26,6 +26,6 @@ end
 
 package "postgresql-server-dev" do
   package_name value_for_platform(
-    ["ubuntu", "debian"] => { "default" => "postgresql-server-dev-all" }
+    ["ubuntu", "debian"] => { "default" => "postgresql-server-dev-8.4" }
   )
 end
