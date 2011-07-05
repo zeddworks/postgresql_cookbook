@@ -20,7 +20,7 @@
 
 package "postgresql" do
   package_name value_for_platform(
-    ["ubuntu", "debian"] => { "default" => "postgresql" }
+    ["ubuntu", "debian"] => { "default" => "postgresql-8.4" }
   )
 end
 
