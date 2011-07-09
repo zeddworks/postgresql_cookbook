@@ -20,12 +20,29 @@
 
 package "postgresql" do
   package_name value_for_platform(
-    ["ubuntu", "debian"] => { "default" => "postgresql-8.4" }
+    ["ubuntu", "debian"] => { "default" => "postgresql-8.4" },
+    ["redhat"] => { "default" => "postgresql84-server" }
   )
 end
 
 package "postgresql-server-dev" do
   package_name value_for_platform(
-    ["ubuntu", "debian"] => { "default" => "postgresql-server-dev-8.4" }
+    ["ubuntu", "debian"] => { "default" => "postgresql-server-dev-8.4" },
+    ["redhat"] => { "default" => "postgresql84-devel" }
   )
 end
+
+if platform? "redhat"
+  execute "postgresql-initdb" do
+    command "service postgresql initdb"
+    not_if "test -d /var/lib/pgsql/data/base"
+  end
+
+  cookbook_file "/var/lib/pgsql/data/pg_hba.conf"
+end
+
+service "postgresql" do
+  supports :restart => true, :reload => true, :status => true
+  action [ :enable, :start ]
+end
+
