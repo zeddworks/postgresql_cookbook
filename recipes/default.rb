@@ -38,7 +38,12 @@ if platform? "redhat"
     not_if "test -d /var/lib/pgsql/data/base"
   end
 
-  cookbook_file "/var/lib/pgsql/data/pg_hba.conf"
+  cookbook_file "/var/lib/pgsql/data/pg_hba.conf" do
+    source "pg_hba.conf"
+    mode "0600"
+    owner "postgres"
+    group "postgres"
+  end
 end
 
 service "postgresql" do
