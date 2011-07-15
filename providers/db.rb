@@ -18,7 +18,7 @@ end
 action :drop do
   database = new_resource.database
   owner = new_resource.owner
-  execute "create-postgres-db-#{database}" do
+  execute "drop-postgres-db-#{database}" do
     user "postgres"
     command "psql -c \"DROP DATABASE #{database};\""
     only_if "sudo -u postgres bash -c \"psql -c '\\l'\" | grep #{database}"
